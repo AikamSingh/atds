@@ -68,3 +68,43 @@ class Queue(object):
         """returns true if the stack is empty"""
         return len(self.q) == 0
 
+class Deque(object):
+    """deque data structure"""
+    def __init__(self):
+        self.d = []
+    
+    def add_front(self, item):
+        self.d.insert(0, item)
+    
+    def add_rear(self, item):
+        self.d.append(item)
+    
+    def remove_front(self):
+        return self.d.pop(0)
+    
+    def remove_rear(self):
+        return self.d.pop()
+    
+    def size(self):
+        """returns the size of the stack"""
+        return len(self.d)
+    
+    def is_empty(self):
+        """returns true if the stack is empty"""
+        return len(self.d) == 0
+
+
+def main():
+    print("Testing the Stack class")
+    s = Stack()
+    s.push(0)
+    s.push(3)
+    print(s.peek())
+    print("Popping: \n" + str(s.pop()))
+    print("Checking if empty: \n" + str(s.is_empty()))
+    s.pop()
+    print("Checking if empty: \n" + str(s.is_empty()))
+    print("Popping: \n" + str(s.pop()))
+
+if __name__ == '__main__':
+    main()
