@@ -93,18 +93,36 @@ class Deque(object):
         """returns true if the stack is empty"""
         return len(self.d) == 0
 
+class Node(object):
+    """Implements a node object, to be used in an unordered list"""
+    def __init__(self, data):
+        self.d = data
+        self.n = None
+    
+    def set_data(self, data):
+        self.d = data
+    
+    def get_data(self):
+        return self.d
+    
+    def set_next(self, next):
+        self.n = next
+    
+    def get_next(self):
+        return self.n
+
+    def __repr__(self):
+        return "Node[data=" + str(self.d) + ",next=" + str(self.n) + "]"
+
+
 
 def main():
-    print("Testing the Stack class")
-    s = Stack()
-    s.push(0)
-    s.push(3)
-    print(s.peek())
-    print("Popping: \n" + str(s.pop()))
-    print("Checking if empty: \n" + str(s.is_empty()))
-    s.pop()
-    print("Checking if empty: \n" + str(s.is_empty()))
-    print("Popping: \n" + str(s.pop()))
+    n = Node(3)
+    n2 = Node(2)
+    n.set_next(n2)
+    print(n)
+
+
 
 if __name__ == '__main__':
     main()
