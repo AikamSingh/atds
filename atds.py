@@ -114,6 +114,41 @@ class Node(object):
     def __repr__(self):
         return "Node[data=" + str(self.d) + ",next=" + str(self.n) + "]"
 
+class UnorderedList(object):
+    """Defines an unordered (unsorted) using a series of Nodes"""
+
+    def __init__(self):
+        self.head = None
+    
+    def add(self, n):
+        """creates a new node based on the data, and adds it to the beginning of the list"""
+        temp_node = Node(n)
+        temp_node.set_next(self.head) 
+        self.head = temp_node #changes head to reference the node, instead of the None value
+    
+    def length(self):
+        """traverses the entire length of the list and returns the number of Nodes there are in the list"""
+        node_count = 0
+        current = self.head
+        while current != None:
+            current = current.get_next()
+            node_count += 1
+        return node_count
+    
+    def search(self, n):
+        """Traverses through the list to determine if the indicated data 
+        is present.
+        """
+        current = self.head
+        found = False
+        while current != None and not found:
+            if current.get_data() == n:
+                found = True
+            else:
+                current = current.get_next()
+        return found
+
+
 
 
 def main():
