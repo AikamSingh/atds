@@ -252,6 +252,35 @@ class UnorderedList(object):
         return_value = return_value + "]"
         return return_value
 
+class ULStack(object):
+    """this class describes a stack made with the UnorderedList class"""
+    def __init__(self):
+        self.items = UnorderedList()
+    
+    def push(self, item):
+        """adds an item to the beginning of the stack"""
+        self.items.add(item)
+    
+    def pop(self):
+        """removes and returns the item at position 0 from the stack"""
+        if self.is_empty():
+            return None
+        return self.items.pop(0)
+
+    def peek(self):
+        """returns the value of the first item in the stack"""
+        if self.is_empty():
+            return None
+        return self.items.head.get_data()
+
+    def size(self):
+        """returns the size of the stack"""
+        return self.items.length()
+
+    def is_empty(self):
+        """returns true if the stack is empty, false if it has items"""
+        return self.items.is_empty()
+
 
 
 def main():
