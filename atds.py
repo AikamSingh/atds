@@ -235,15 +235,11 @@ class UnorderedList(object):
                 else:
                     previous.set_next(current.get_next())
                     return current.get_data()
-    
-    
-    
-                
 
     def __repr__(self):
-        '''Creates a representation of the list suitable for 
+        """Creates a representation of the list suitable for 
         printing, debugging.
-        ''' 
+        """ 
         return_value = "UnorderedList["
         next_node = self.head
         while next_node != None:
@@ -251,8 +247,6 @@ class UnorderedList(object):
             next_node = next_node.get_next()
         return_value = return_value + "]"
         return return_value
-
-
 
 def main():
     ul = UnorderedList()
