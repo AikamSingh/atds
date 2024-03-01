@@ -140,22 +140,127 @@ class UnorderedList(object):
         is present.
         """
         current = self.head
-        found = False
-        while current != None and not found:
+        while current != None:
             if current.get_data() == n:
-                found = True
+                return True #returns true if the data is present
             else:
                 current = current.get_next()
-        return found
+        return False #returns false if the data is not present
+    
+    def remove(self, data):
+        """Removes all occurrences of the specified data from the list."""
+        previous = None
+        current = self.head
+        
+        while current is not None:
+            if current.get_data() == data:
+                if previous is None:
+                    self.head = current.get_next()
+                    current = self.head
+                else:
+                    previous.set_next(current.get_next())
+                    current = current.get_next()
+            else:
+                previous = current
+                current = current.get_next()
+        
+    def is_empty(self):
+        """returns True if the list if empty"""
+        return self.head == None
+    
+    def append(self, item):
+        """appends a new item to the end of the linked list"""
+        current = self.head
+        while current.get_next() != None:
+            current = current.get_next()
+        temp_node = Node(item)
+        current.set_next(temp_node)
+    
+    def index(self, item):
+        """returns the position of the item in the list (and assumes it is in the list)"""
+        current = self.head
+        index = 0
+        while current != None:
+            if current.get_data() == item:
+                return index
+            else:
+                current = current.get_next()
+                index += 1
+    
+    def insert(self, pos, item):
+        """adds a new item to the list at the specified position. This assumes that the item is not already on the list and that the position exists."""
+        if pos == 0:
+            self.add(item)
+        else:
+            current = self.head
+            previous = None
+            current_pos = 0
+            while current_pos < pos and current != None:
+                previous = current
+                current = current.get_next()
+                current_pos += 1
+            new_node = Node(item)
+            previous.set_next(new_node)
+            new_node.set_next(current)
+    
+    def pop(self, pos=None):
+        """removes the last item from the list and returns it.
+        If position is specified, it removes and returns item at that position."""
+        if pos is None:
+            current = self.head
+            previous = None
+            while current.get_next() != None:
+                previous = current
+                current = current.get_next()
+            if previous is None:
+                self.head = None
+            else:
+                previous.set_next(None)
+            return current.get_data()
+        else:
+            if pos == 0:
+                item = self.head.get_data()
+                self.head = self.head.get_next()
+                return item
+            else:
+                current = self.head
+                previous = None
+                current_pos = 0
+                while current_pos < pos and current != None:
+                    previous = current
+                    current = current.get_next()
+                    current_pos += 1
+                if current is None:
+                    return None
+                else:
+                    previous.set_next(current.get_next())
+                    return current.get_data()
+    
+    
+    
+                
 
+    def __repr__(self):
+        '''Creates a representation of the list suitable for 
+        printing, debugging.
+        ''' 
+        return_value = "UnorderedList["
+        next_node = self.head
+        while next_node != None:
+            return_value += str(next_node.get_data()) + ","
+            next_node = next_node.get_next()
+        return_value = return_value + "]"
+        return return_value
 
 
 
 def main():
-    n = Node(3)
-    n2 = Node(2)
-    n.set_next(n2)
-    print(n)
+    ul = UnorderedList()
+    ul.add(3)
+    ul.add(4)
+    print(ul.search(3))
+    print(ul.search(2))
+    print(ul)
 
 
 
