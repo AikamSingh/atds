@@ -277,6 +277,92 @@ class ULStack(object):
         """returns true if the stack is empty, false if it has items"""
         return self.items.is_empty()
 
+class HashTable():
+    """Describes a hash table that will store key-value pairs.
+    One way to do this would be to create a single array of dictionary-style
+    objects. Another strategy--simultaneously simpler and more cumbersome--
+    is to maintain a pair of parallel arrays. One array--slots--keeps track
+    of the keys, while a second array--data--stores the value associated with
+    each key.
+    
+    At the beginning, the parallel arrays for a hash table of size 7 look like 
+    this:
+    
+        slots = [ None, None, None, None, None, None, None ]
+    
+        data =  [ None, None, None, None, None, None, None ]
+        
+    Calling the .put(key, value) method will update the slots and data in 
+    those arrays:
+    
+        .put(8, "Adam")
+        
+    Updated hash table (based on slot 8 % 7 = 1)
+     
+        slots = [ None,    8  , None, None, None, None, None ]
+    
+        data =  [ None, "Adam", None, None, None, None, None ]
+    
+    """
+    
+    
+###############################
+
+    def __init__(self, m):
+        """Creates an empty hash table of the size m
+        """
+        self.size = m                       # remember, prime numbers are better
+        self.slots = [None] * self.size     # a list of None keys
+        self.data = [None] * self.size      # a list of None values
+
+###############################
+
+    def hash_function(self, key, size):
+        """This helper method returns the value of the hash function, based on 
+        the key and the size of the table.
+        """
+        return key % size
+
+###############################
+
+    def put(self, key, value):
+        """Places a key-value pair in the hash table, or replaces
+        the current value if the key already exists in the table.
+        """
+        hash_value = key % self.size
+        while self.keys[hash_value] != None and self.keys[hash_value] != key:
+            hash_value += 1
+        if self.keys[hash_value] == key:
+            self.data[hash_value] = value
+        else:
+            self.keys[hash_value] = key
+            self.data[hash_value] = value
+        
+            
+###############################
+
+    def get(self, key):
+        """Tries to find a key-value pair in the hash table, or returns
+        None if no key is found.
+        """
+        hash_value = key % self.size
+        while self.keys[hash_value] != None and self.keys[hash_value] != key:
+            hash_value += 1
+        if self.keys[hash_value] == key:
+            return self.data[hash_value]
+        else:
+            return None
+
+        
+###############################
+
+    def __repr__(self):
+        """Returns a string representation of the hash table, displayed 
+        as two arrays.
+        """
+        return "Keys:   " + str(self.slots) + "\n" + "Values: " + str(self.data)
+
+
 def main():
     ul = UnorderedList()
     ul.add(3)
