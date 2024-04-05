@@ -320,29 +320,36 @@ class BinaryTree(object):
     """Describes a BinaryTree object which contains nodes that point to two children."""
 
     def __init__(self, val):
+        """initiates a binary tree with a root value and no children"""
         self.val = val
         self.left = None
         self.right = None
     
     def get_root_val(self):
+        """returns the root value"""
         return self.val
     
     def set_root_val(self, v):
+        """sets the root value"""
         self.val = v
 
     def get_left_child(self):
+        """returns the left child"""
         return self.left
     
     def get_right_child(self):
+        """returns the right child"""
         return self.right
     
     def insert_left(self, new_left_val):
+        """inserts a new left value and shifts the already existing left value. ex. if we had a --> b and we inserted c, then it would be a --> c --> b."""
         new_subtree = BinaryTree(new_left_val)
         new_subtree.left = self.left
         self.left = new_subtree
         
     
     def insert_right(self, new_right_val):
+        """inserts a new right value and shifts the already existing right value. ex. if we had a --> b and we inserted c, then it would be a --> c --> b."""
         new_subtree = BinaryTree(new_right_val)
         new_subtree.right = self.right
         self.right = new_subtree
