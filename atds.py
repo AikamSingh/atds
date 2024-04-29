@@ -320,42 +320,107 @@ class BinaryTree(object):
     """Describes a BinaryTree object which contains nodes that point to two children."""
 
     def __init__(self, val):
-        """initiates a binary tree with a root value and no children"""
         self.val = val
         self.left = None
         self.right = None
     
     def get_root_val(self):
-        """returns the root value"""
         return self.val
     
     def set_root_val(self, v):
-        """sets the root value"""
         self.val = v
 
     def get_left_child(self):
-        """returns the left child"""
         return self.left
     
     def get_right_child(self):
-        """returns the right child"""
         return self.right
     
     def insert_left(self, new_left_val):
-        """inserts a new left value and shifts the already existing left value. ex. if we had a --> b and we inserted c, then it would be a --> c --> b."""
         new_subtree = BinaryTree(new_left_val)
         new_subtree.left = self.left
         self.left = new_subtree
         
     
     def insert_right(self, new_right_val):
-        """inserts a new right value and shifts the already existing right value. ex. if we had a --> b and we inserted c, then it would be a --> c --> b."""
         new_subtree = BinaryTree(new_right_val)
         new_subtree.right = self.right
         self.right = new_subtree
     
     def __repr__(self):
         return "BinaryTree[key=" + str(self.val) + ",left_child=" + str(self.left) + ",right_child=" + str(self.right) + "]"
+
+class BinaryHeap(object):
+    """Describes a BinaryHeap tree"""
+    def __init__(self):
+        self.heap_list = [0]
+        self.current_size = 0
+    
+    def percolate_up(self,i):
+        while i // 2 > 0:
+            print(i)
+            if self.heap_list[i] < self.heap_list[i // 2]:
+                tmp = self.heap_list[i // 2]
+                self.heap_list[i // 2] = self.heap_list[i]
+                self.heap_list[i] = tmp
+                i = i // 2
+            else:
+                return
+    
+    def percolate_down(self,i):
+        while (i * 2) <= self.current_size:
+            mc = self.min_child(i)
+            if self.heap_list[i] > self.heap_list[mc]:
+                tmp = self.heap_list[i]
+                self.heap_list[i] = self.heap_list[mc]
+                self.heap_list[mc] = tmp
+            i = mc
+                
+    
+    def insert(self,k):
+        self.heap_list.append(k)
+        self.current_size = self.current_size + 1
+        self.percolate_up(self.current_size)
+    
+    def min_child(self, i):
+        if i * 2 + 1 > self.current_size:
+            return i * 2
+        else:
+            if self.heap_list[i*2] < self.heap_list[i*2+1]:
+                return i * 2
+            else:
+                return i * 2 + 1
+    
+    def find_min(self):
+        return self.heap_list[1]
+    
+    def del_min(self):
+        ret_val = self.heap_list[1]
+        self.heap_list[1] = self.heap_list[self.current_size]
+        self.current_size = self.current_size - 1
+        self.heap_list.pop()
+        self.percolate_down(1)
+        return ret_val
+    
+    def is_empty(self):
+        if self.current_size == 0:
+            return True
+        else:
+            return False
+    
+    def size(self):
+        return self.current_size
+    
+    def build_heap(self, value_list):
+        i = len(value_list) // 2
+        self.current_size = len(value_list)
+        self.heap_list = [0] + value_list[:]
+        while (i > 0):
+            self.percolate_down(i)
+            i = i - 1
+
+    def __repr__(self):
+        return "BinaryHeap" + str(self.heap_list)
 
 
 def main():
