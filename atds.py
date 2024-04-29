@@ -375,7 +375,6 @@ class BinaryHeap(object):
                 self.heap_list[i] = self.heap_list[mc]
                 self.heap_list[mc] = tmp
             i = mc
-                
     
     def insert(self,k):
         self.heap_list.append(k)
@@ -421,6 +420,114 @@ class BinaryHeap(object):
 
     def __repr__(self):
         return "BinaryHeap" + str(self.heap_list)
+
+class HashTable():
+    """Describes a hash table that will store key-value pairs.
+    One way to do this would be to create a single array of dictionary-style
+    objects. Another strategy--simultaneously simpler and more cumbersome--
+    is to maintain a pair of parallel arrays. One array--slots--keeps track
+    of the keys, while a second array--data--stores the value associated with
+    each key.
+    
+    At the beginning, the parallel arrays for a hash table of size 7 look like 
+    this:
+    
+        slots = [ None, None, None, None, None, None, None ]
+    
+        data =  [ None, None, None, None, None, None, None ]
+        
+    Calling the .put(key, value) method will update the slots and data in 
+    those arrays:
+    
+        .put(8, "Adam")
+        
+    Updated hash table (based on slot 8 % 7 = 1)
+     
+        slots = [ None,    8  , None, None, None, None, None ]
+    
+        data =  [ None, "Adam", None, None, None, None, None ]
+    
+    """
+    
+    
+###############################
+
+    def __init__(self, m):
+        """Creates an empty hash table of the size m
+        """
+        self.size = m                       # remember, prime numbers are better
+        self.slots = [None] * self.size     # a list of None keys
+        self.data = [None] * self.size      # a list of None values
+
+###############################
+
+    def hash_function(self, key, size):
+        """This helper method returns the value of the hash function, based on 
+        the key and the size of the table.
+        """
+        return key % size
+
+###############################
+
+    def put(self, key, value):
+        """Places a key-value pair in the hash table, or replaces
+        the current value if the key already exists in the table.
+        """
+        hash_value = self.hash_function(key, self.size)
+        if self.slots[hash_value] is None:
+            self.slots[hash_value] = key
+            self.data[hash_value] = value
+        else:
+            if self.slots[hash_value] == key:
+                self.data[hash_value] = value
+            else:
+                next_slot = self.rehash(hash_value, self.size)
+                while self.slots[next_slot] is not None and self.slots[next_slot] != key:
+                    next_slot = self.rehash(next_slot, self.size)
+                
+                if self.slots[next_slot] is None:
+                    self.slots[next_slot] = key
+                    self.data[next_slot] = value
+                else:
+                    self.data[next_slot] = value
+
+###############################
+
+    def get(self, key):
+        """Tries to find a key-value pair in the hash table, or returns
+        None if no key is found.
+        """
+        start_slot = self.hash_function(key, self.size)
+
+        data = None
+        stop = False
+        found = False
+        position = start_slot
+        while self.slots[position] is not None and not found and not stop:
+            if self.slots[position] == key:
+                found = True
+                data = self.data[position]
+            else:
+                position = self.rehash(position, self.size)
+                if position == start_slot:
+                    stop = True
+        return data
+        
+###############################
+
+    def rehash(self, old_hash, size):
+        """Returns a new hash value based on the old hash value.
+        """
+        return (old_hash + 1) % size
+
+###############################
+
+    def __repr__(self):
+        """Returns a string representation of the hash table, displayed 
+        as two arrays.
+        """
+        return "Keys:   " + str(self.slots) + "\n" + "Values: " + str(self.data)
+
 
 
 def main():
