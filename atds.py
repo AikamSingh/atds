@@ -422,35 +422,11 @@ class BinaryHeap(object):
         return "BinaryHeap" + str(self.heap_list)
 
 class HashTable():
-    """Describes a hash table that will store key-value pairs.
-    One way to do this would be to create a single array of dictionary-style
-    objects. Another strategy--simultaneously simpler and more cumbersome--
-    is to maintain a pair of parallel arrays. One array--slots--keeps track
-    of the keys, while a second array--data--stores the value associated with
-    each key.
-    
-    At the beginning, the parallel arrays for a hash table of size 7 look like 
-    this:
-    
-        slots = [ None, None, None, None, None, None, None ]
-    
-        data =  [ None, None, None, None, None, None, None ]
-        
-    Calling the .put(key, value) method will update the slots and data in 
-    those arrays:
-    
-        .put(8, "Adam")
-        
-    Updated hash table (based on slot 8 % 7 = 1)
-     
-        slots = [ None,    8  , None, None, None, None, None ]
-    
-        data =  [ None, "Adam", None, None, None, None, None ]
-    
+    """
+    Describes a hash table that will store key-value pairs.
     """
     
     
-###############################
 
     def __init__(self, m):
         """Creates an empty hash table of the size m
@@ -459,7 +435,6 @@ class HashTable():
         self.slots = [None] * self.size     # a list of None keys
         self.data = [None] * self.size      # a list of None values
 
-###############################
 
     def hash_function(self, key, size):
         """This helper method returns the value of the hash function, based on 
@@ -467,7 +442,6 @@ class HashTable():
         """
         return key % size
 
-###############################
 
     def put(self, key, value):
         """Places a key-value pair in the hash table, or replaces
@@ -491,7 +465,6 @@ class HashTable():
                 else:
                     self.data[next_slot] = value
 
-###############################
 
     def get(self, key):
         """Tries to find a key-value pair in the hash table, or returns
@@ -513,7 +486,6 @@ class HashTable():
                     stop = True
         return data
         
-###############################
 
     def rehash(self, old_hash, size):
         """Returns a new hash value based on the old hash value.
@@ -529,89 +501,89 @@ class HashTable():
         return "Keys:   " + str(self.slots) + "\n" + "Values: " + str(self.data)
     
     class Vertex(object):
-    """Describes a vertex object in terms of a "key" and a
-    dictionary that indicates edges to neighboring vertices with
-    a specified weight.
-    """
-    
-    def __init__(self, key):
-        """Constructs a vertex with a key value and an empty dictionary 
-        in which we'll store other vertices to which this vertex is
-        connected.
+        """Describes a vertex object in terms of a "key" and a
+        dictionary that indicates edges to neighboring vertices with
+        a specified weight.
         """
-        self.id = key
-        self.connected_to = {}   # empty dictionary for neighboring vertices
-        self.color = 'white'
-        self.distance = 0
-        self.predecessor = None
-        self.discovery_time = 0     # discovery time
-        self.finish_time = 0        # finish time  
-    
-    def add_neighbor(self, neighbor_vertex, weight=0):
-        """Adds a reference to a neighboring Vertex object to the
-        dictionary, to which this vertex is connected by an edge. 
-        If a weight is not indicated, default weight is 0.
-        """
-        self.connected_to[neighbor_vertex] = weight
-    
-    def set_color(self, color):
-        self.color = color
-    
-    def get_color(self):
-        return self.color
-    
-    def set_distance(self, distance):
-        self.distance = distance
-    
-    def get_distance(self):
-        return self.distance
-    
-    def set_pred(self, predecessor):
-        self.predecessor = predecessor
-    
-    def get_pred(self):
-        return self.predecessor
-    
-    def set_discovery(self, discovery_time):
-        self.discovery_time = discovery_time
-    
-    def get_discovery(self):
-        return self.discovery_time
-    
-    def set_finish(self, finish_time):
-        self.finish_time = finish_time
-    
-    def get_finish(self):
-        return self.finish_time
-    
-    def __repr__(self):
-        """Returns a representation of the vertex and its neighbors,
-        suitable for printing. Check out the example of 'list
-        comprehension' here!
-        """
-        return 'Vertex[id=' + str(self.id) \
-                + ',color=' + self.color \
-                + ',dist=' + str(self.distance) \
-                + ',pred=' + str(self.predecessor) \
-                + ',disc=' + str(self.discovery_time) \
-                + ',fin=' + str(self.finish_time) \
-              + '] connected_to: ' + str([x.id for x in self.connected_to]) 
-    
-    def get_connections(self):
-        """Returns the keys of the vertices we're connected to
-        """
-        return self.connected_to.keys()
-    
-    def get_id(self):
-        """Returns the id ("key") for this vertex
-        """
-        return self.id
-    
-    def get_weight(self, neighbor_vertex):
-        """Returns the weight of an edge connecting this vertex 
-        with another.
-        """
-        return self.connected_to[neighbor_vertex]
+        
+        def __init__(self, key):
+            """Constructs a vertex with a key value and an empty dictionary 
+            in which we'll store other vertices to which this vertex is
+            connected.
+            """
+            self.id = key
+            self.connected_to = {}   # empty dictionary for neighboring vertices
+            self.color = 'white'
+            self.distance = 0
+            self.predecessor = None
+            self.discovery_time = 0     # discovery time
+            self.finish_time = 0        # finish time  
+        
+        def add_neighbor(self, neighbor_vertex, weight=0):
+            """Adds a reference to a neighboring Vertex object to the
+            dictionary, to which this vertex is connected by an edge. 
+            If a weight is not indicated, default weight is 0.
+            """
+            self.connected_to[neighbor_vertex] = weight
+        
+        def set_color(self, color):
+            self.color = color
+        
+        def get_color(self):
+            return self.color
+        
+        def set_distance(self, distance):
+            self.distance = distance
+        
+        def get_distance(self):
+            return self.distance
+        
+        def set_pred(self, predecessor):
+            self.predecessor = predecessor
+        
+        def get_pred(self):
+            return self.predecessor
+        
+        def set_discovery(self, discovery_time):
+            self.discovery_time = discovery_time
+        
+        def get_discovery(self):
+            return self.discovery_time
+        
+        def set_finish(self, finish_time):
+            self.finish_time = finish_time
+        
+        def get_finish(self):
+            return self.finish_time
+        
+        def __repr__(self):
+            """Returns a representation of the vertex and its neighbors,
+            suitable for printing. Check out the example of 'list
+            comprehension' here!
+            """
+            return 'Vertex[id=' + str(self.id) \
+                    + ',color=' + self.color \
+                    + ',dist=' + str(self.distance) \
+                    + ',pred=' + str(self.predecessor) \
+                    + ',disc=' + str(self.discovery_time) \
+                    + ',fin=' + str(self.finish_time) \
+                + '] connected_to: ' + str([x.id for x in self.connected_to]) 
+        
+        def get_connections(self):
+            """Returns the keys of the vertices we're connected to
+            """
+            return self.connected_to.keys()
+        
+        def get_id(self):
+            """Returns the id ("key") for this vertex
+            """
+            return self.id
+        
+        def get_weight(self, neighbor_vertex):
+            """Returns the weight of an edge connecting this vertex 
+            with another.
+            """
+            return self.connected_to[neighbor_vertex]
 
 class Graph(object):
     """Describes the Graph class, which is primarily a dictionary
